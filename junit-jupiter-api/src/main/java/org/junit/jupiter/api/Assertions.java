@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiPredicate;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -1551,6 +1552,73 @@ public class Assertions {
 	public static void assertIterableEquals(Iterable<?> expected, Iterable<?> actual,
 			Supplier<String> messageSupplier) {
 		AssertIterableEquals.assertIterableEquals(expected, actual, messageSupplier);
+	}
+
+	// --- assertIterableMatches --------------------------------------------
+
+	/**
+	 * <em>Assert</em> that the elements of the {@code actual} iterable
+	 * match the elements of the {@code expected} iterable,
+	 * according to the supplied {@code predicate}. The predicate must not be {@code null}.
+	 * <strong>Note:</strong>
+	 * this means that the iterables <em>do not</em> need to be of the same type. Example: <pre>{@code
+	 * import static java.util.Arrays.asList;
+	 *  . . .
+	 * Iterable<Integer> i0 = new ArrayList<>(asList(1, 2, 3));
+	 * Iterable<Integer> i1 = new LinkedList<>(asList(2, 3, 4));
+	 * assertIterableMatches((e, a) -> a.intValue() > e.intValue(), i0, i1); // Passes
+	 * }</pre>
+	 * <p>If both {@code expected} and {@code actual} are {@code null}, they are considered matching.
+	 *
+	 * @since 5.10
+	 */
+	public static <E, A> void assertIterableMatches(BiPredicate<? super E, ? super A> predicate, Iterable<E> expected,
+			Iterable<A> actual) {
+		AssertIterableMatches.assertIterableMatches(predicate, expected, actual);
+	}
+
+	/**
+	 * <em>Assert</em> that the elements of the {@code actual} iterable
+	 * match the elements of the {@code expected} iterable,
+	 * according to the supplied {@code predicate}. The predicate must not be {@code null}.
+	 * <strong>Note:</strong>
+	 * this means that the iterables <em>do not</em> need to be of the same type. Example: <pre>{@code
+	 * import static java.util.Arrays.asList;
+	 *  . . .
+	 * Iterable<Integer> i0 = new ArrayList<>(asList(1, 2, 3));
+	 * Iterable<Integer> i1 = new LinkedList<>(asList(2, 3, 4));
+	 * assertIterableMatches((e, a) -> a.intValue() > e.intValue(), i0, i1); // Passes
+	 * }</pre>
+	 * <p>If both {@code expected} and {@code actual} are {@code null}, they are considered matching.
+	 * <p>Fails with the supplied failure {@code message}.
+	 *
+	 * @since 5.10
+	 */
+	public static <E, A> void assertIterableMatches(BiPredicate<? super E, ? super A> predicate, Iterable<E> expected,
+			Iterable<A> actual, String message) {
+		AssertIterableMatches.assertIterableMatches(predicate, expected, actual, message);
+	}
+
+	/**
+	 * <em>Assert</em> that the elements of the {@code actual} iterable
+	 * match the elements of the {@code expected} iterable,
+	 * according to the supplied {@code predicate}. The predicate must not be {@code null}.
+	 * <strong>Note:</strong>
+	 * this means that the iterables <em>do not</em> need to be of the same type. Example: <pre>{@code
+	 * import static java.util.Arrays.asList;
+	 *  . . .
+	 * Iterable<Integer> i0 = new ArrayList<>(asList(1, 2, 3));
+	 * Iterable<Integer> i1 = new LinkedList<>(asList(2, 3, 4));
+	 * assertIterableMatches((e, a) -> a.intValue() > e.intValue(), i0, i1); // Passes
+	 * }</pre>
+	 * <p>If both {@code expected} and {@code actual} are {@code null}, they are considered matching.
+	 * <p>If necessary, the failure message will be retrieved lazily from the supplied {@code messageSupplier}.
+	 *
+	 * @since 5.10
+	 */
+	public static <E, A> void assertIterableMatches(BiPredicate<? super E, ? super A> predicate, Iterable<E> expected,
+			Iterable<A> actual, Supplier<String> messageSupplier) {
+		AssertIterableMatches.assertIterableMatches(predicate, expected, actual, messageSupplier);
 	}
 
 	// --- assertLinesMatch ----------------------------------------------------

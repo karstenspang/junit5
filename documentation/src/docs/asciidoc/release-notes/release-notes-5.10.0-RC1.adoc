@@ -60,6 +60,7 @@ JUnit repository on GitHub.
   the documentation for extension registration via `@ExtendWith` on fields.
 * The scope of applicability for `TestWatcher` implementations is now more extensively
   documented in the User Guide and Javadoc.
+* New `assertIterableMatches` assertions.
 
 
 [[release-notes-5.10.0-RC1-junit-vintage]]
